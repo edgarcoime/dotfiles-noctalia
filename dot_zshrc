@@ -1,0 +1,118 @@
+# ====================== PATH CONFIGS HERE ======================
+# If possible set in .zprofile for configs and path not here
+# ====================== PATH CONFIGS HERE ======================
+
+# ====================== ZSH CONFIGS AND MINIMUM CONFIGS ======================
+# Set the directory we want to store zinit and plugins
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+
+
+# Download zinit, if it's not there yet
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+
+# source and load zinit
+source "${ZINIT_HOME}/zinit.zsh"
+
+# Load starship theme
+# line 1: `starship` binary as command, from github release
+# line 2: starship setup at clone(create init.zsh, completion)
+# line 3: pull behavior same as clone, source init.zsh
+zinit ice as"command" from"gh-r" \
+          atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+          atpull"%atclone" src"init.zsh"
+zinit light starship/starship
+
+# ZSH PLUGINS
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
+
+# ADD IN SNIPPETS
+zinit snippet OMZP::git
+zinit snippet OMZP::sudo
+zinit snippet OMZP::dirhistory
+# zinit snippet OMZP::macos # Only on macos machines some directories not working
+zinit snippet OMZP::aws
+# zinit snippet OMZP::docker # some directories not working
+zinit snippet OMZP::docker-compose
+zinit snippet OMZP::kubectl
+zinit snippet OMZP::kubectx
+zinit snippet OMZP::command-not-found
+
+# LOAD COMPLETIONS
+autoload -U compinit && compinit
+zinit cdreplay -q
+
+# PATH overrides
+# ====================== PATH OVERRIDES START ======================
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/home/ecoime/scripts
+# ====================== PATH OVERRIDES END ======================
+
+# BINARY SHELL INTEGRATIONS (NEED TO BE INSTALLED IN SYSTEM)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(zoxide init --cmd cd zsh)" # overwrites cd
+
+# KEYBINDS
+bindkey -e
+# Make history related to commands
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+
+# HISTORY
+HISTSIZE=10000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space # useful if you want to input sensitive data, prepend with space and continue cmd
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
+# Completion Styling
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# Defaults
+export EDITOR="nvim"
+# ====================== ARCH SYSTEM REQUIRED START ======================
+alias open="xdg-open"
+# ====================== ARCH SYSTEM REQUIRED END ======================
+
+# ====================== ZSH CONFIGS AND MINIMUM CONFIGS ======================
+alias ll="eza -F -lh --icons=always --group-directories-first"
+alias llt="eza -F -l --icons=always --group-directories-first --sort=time"
+alias tree="eza -F --tree --icons=always"
+
+alias lg="lazygit"
+
+alias nv='bob run nightly'
+alias chz="chezmoi"
+
+# NVM (Node)
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# PYENV setup
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
+
+# Cargo install
+. "$HOME/.cargo/env"
+
+
+
+
+
+
+
+# AFTER here is added
