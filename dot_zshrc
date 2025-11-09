@@ -89,7 +89,7 @@ alias open="xdg-open"
 # ====================== ZSH CONFIGS AND MINIMUM CONFIGS ======================
 alias ll="eza -F -lh --icons=always --group-directories-first"
 alias llt="eza -F -l --icons=always --group-directories-first --sort=time"
-alias tree="eza -F --tree --icons=always"
+alias tree="eza -F -l --group-directories-first --tree --icons=always"
 
 alias lg="lazygit"
 
