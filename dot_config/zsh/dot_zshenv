@@ -1,0 +1,2 @@
+# Environment vars and path
+source $ZDIR/core/env.zsh

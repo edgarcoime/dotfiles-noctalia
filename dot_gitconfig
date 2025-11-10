@@ -1,0 +1,41 @@
+[user]
+	name = Edgar Coime
+	email = e.coimeii@hotmail.com
+
+# Other possible Git configurations
+#   - Set the default editor (nano, VS Code, etc.)
+#   - Customize colour output
+#   - Create aliases (shortcuts for Git subcommands)
+#   - Add endpoint shortcuts for commonly used URLS
+[init]
+	defaultBranch = main
+[core]
+	editor = nvim
+	excludesFile = /home/ecoime/configs/gitconfig/.gitignore
+[alias]
+	bare = clone --bare
+
+	st = status -s
+	sta = status
+
+	conf = config --global --edit
+	cge = config --global --edit
+
+	ci = commit
+	co = checkout
+	aa = add -A
+
+	br = branch
+	bra = branch -a
+	pr = pull --rebase
+
+	# Resets
+	rh = reset HEAD # unstage all files
+	cdf = clean -df # remove untracked files
+	cod = checkout . # discard changes in working directory
+
+	# Worktrees
+	wta = worktree add
+	wtl = worktree list
+	wtr = worktree remove
+	wtc = "!sh $HOME/scripts/git-clone-bare-for-worktrees.sh"

@@ -1,0 +1,7 @@
+# https://unix.stackexchange.com/questions/71253/what-should-shouldnt-go-in-zshenv-zshrc-zlogin-zprofile-zlogout/71258#71258
+# NOTE: Order of precedence: .zshenv -> .zprofile -> .zshrc -> .zlogin -> .zlogout
+
+ZDOTDIR=$HOME/.config/zsh
+ZDIR=$HOME/.config/zsh
+
+. $ZDOTDIR/.zshenv

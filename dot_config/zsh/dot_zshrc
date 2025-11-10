@@ -1,0 +1,11 @@
+# zinit config
+source $ZDIR/core/zinit.zsh
+
+# options
+source $ZDIR/core/opts.zsh
+
+# alias
+source $ZDIR/core/aliases.zsh
+
+# extensions
+source $ZDIR/extensions/extensions.zsh
